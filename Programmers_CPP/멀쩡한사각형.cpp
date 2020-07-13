@@ -1,6 +1,6 @@
 using namespace std;
 
-int least(int a, int b) {
+int gcd(int a, int b) {
 	if (a % b == 0) {
 		return b;
 	}
@@ -15,7 +15,7 @@ long long solution(int w, int h) {
 	long long diagonal = 1;
 
 	if (w > h) {
-		temp = least(w, h);
+		temp = gcd(w, h);
 		rA = w / temp;
 		rB = h / temp;
 	}
@@ -25,7 +25,7 @@ long long solution(int w, int h) {
 		rB = 1;
 	}
 	else {
-		temp = least(h, w);
+		temp = gcd(h, w);
 		rA = h / temp;
 		rB = w / temp;
 	}
