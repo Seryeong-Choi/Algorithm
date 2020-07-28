@@ -20,7 +20,7 @@ int main() {
 
 	vector<int> dp = { 0,1,2,4 };
 
-	for (int i = 4; i <= *max_element(input.begin(), input.end()); i++) 
+	for (int i = 4; i <= *max_element(input.begin(), input.end()); i++)
 		dp.push_back(dp[i - 1] + dp[i - 2] + dp[i - 3]);
 
 	for (int i : input)
