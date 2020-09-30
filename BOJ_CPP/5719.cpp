@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <set>
 using namespace std;
 
 typedef pair<int, int> pi;
@@ -24,7 +25,7 @@ int main() {
 		}
 		//dijkstra
 		priority_queue<pi, vector<pi>, greater<pi>> pq;
-		vector<vector<int>> parent(n);
+		vector<set<int>> parent(n);
 		vector<int> dist(n, 5000000);
 		int cur, curd, nxt, nxtd;
 		dist[s] = 0;
@@ -41,10 +42,10 @@ int main() {
 					dist[nxt] = nxtd;
 					//reset parent[nxt]
 					parent[nxt].clear();
-					parent[nxt].push_back(cur);
+					parent[nxt].insert(cur);
 				}
 				else if (nxtd == dist[nxt])
-					parent[nxt].push_back(cur);
+					parent[nxt].insert(cur);
 			}
 		}
 		if (dist[d] == 5000000) {
@@ -52,20 +53,26 @@ int main() {
 			continue;
 		}
 		//delete node
+		vector<bool> visited(n, false);
 		queue<int> del;
 		del.push(d);
+		visited[d] = true;
 		while (!del.empty()) {
 			cur = del.front();
 			del.pop();
-			for (int i = 0; i < parent[cur].size(); i++) {
-				nxt = parent[cur][i];
-				del.push(nxt);
-				for (int j = 0; j < graph[nxt].size(); j++)
-					if (graph[nxt][j].first == cur) {
-						graph[nxt].erase(graph[nxt].begin() + j);
+			auto it = parent[cur].begin();
+			while (it != parent[cur].end()) {
+				for (int j = 0; j < graph[*it].size(); j++)
+					if (graph[*it][j].first == cur) {
+						graph[*it].erase(graph[*it].begin() + j);
 						break;
 					}
-			}
+				if (!visited[*it]) {
+					visited[*it] = true;
+					del.push(*it);
+				}
+				it++;
+			} 
 		}
 		//dijkstra//without tracing
 		parent.clear();
@@ -85,9 +92,10 @@ int main() {
 				}
 			}
 		}
-		if (dist[d] == 5000000) 
+		if (dist[d] == 5000000)
 			cout << -1 << '\n';
 		else
 			cout << dist[d] << '\n';
+		dist.clear();
 	}
 }
