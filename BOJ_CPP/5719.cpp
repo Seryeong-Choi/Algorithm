@@ -52,7 +52,7 @@ int main() {
 			cout << -1 << '\n';
 			continue;
 		}
-		//delete node
+		//delete edge
 		vector<bool> visited(n, false);
 		queue<int> del;
 		del.push(d);
