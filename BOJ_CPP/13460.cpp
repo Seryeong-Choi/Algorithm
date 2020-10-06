@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <string>
 #include <queue>
 using namespace std;
 
@@ -68,8 +68,10 @@ int main() {
 					}
 					if (board[nxt.Bx][nxt.By] == 'O') // 파란색 빠짐
 						continue;
-					else if(board[nxt.Rx][nxt.Ry] == 'O') { //빨간색 빠졌는지 체크
-						ans = min(ans, nxt.count);
+					else if (board[nxt.Rx][nxt.Ry] == 'O') { //빨간색 빠졌는지 체크
+						ans = nxt.count;
+						queue<beads> empty;
+						q.swap(empty);
 						break;
 					}
 					//둘다안빠졌으면
@@ -92,7 +94,9 @@ int main() {
 						nxt.Ry += mov[i].second;
 					}
 					if (board[nxt.Rx][nxt.Ry] == 'O') {
-						ans = min(ans, nxt.count);
+						ans = nxt.count;
+						queue<beads> empty;
+						q.swap(empty);
 						break;
 					}
 					nxt.Rx -= mov[i].first;
